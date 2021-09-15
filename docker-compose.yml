@@ -1,0 +1,41 @@
+version: "3.3"
+networks:
+  lnnet:
+
+services:
+  bitcoind:
+    container_name: bitcoind
+    build:
+        context: bitcoind
+    image: paymeinbitcoin/bitcoind:latest
+    networks:
+      - lnnet
+    expose:
+      - "18443"
+      - "12005"
+      - "12006"
+    restart: always
+
+  You:
+    container_name: You
+    build:
+        context: lnd
+    image: paymeinbitcoin/lnd:latest
+    networks:
+      - lnnet
+    expose:
+      - "9735"
+    restart: always
+
+  Me:
+    container_name: Me
+    build:
+        context: lnd
+    image: paymeinbitcoin/lnd:latest
+    networks:
+      - lnnet
+    expose:
+      - "9735"
+    restart: always
+
+
